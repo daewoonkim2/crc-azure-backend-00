@@ -15,21 +15,11 @@ table_client = table_service_client.create_table_if_not_exists(tablename)
 
 app = func.FunctionApp()
 
-@app.function_name(name="CosmosDBTrigger1")
-@app.cosmos_db_trigger(arg_name="documents", database_name=dbname, collection_name=tablename, connection_string_setting=connectionstring,
- lease_collection_name="leases", create_lease_collection_if_not_exists="true")
-def db_trigger_test (documents: func.DocumentList):
-    if documents:
-        logging.info('Document id: %s', documents[0]['id'])
-
 def update_visitor_count (res: TableEntity):
-    try:
-        logging.info('updating database')
-        res['number'] = res['number'] + 1
-        table_client.upsert_entity(res, mode=UpdateMode.REPLACE)
-        logging.info('updated database')
-    except Exception:
-        logging.critical('ran into problem updating visitor count')
+    logging.info('updating database')
+    res['number'] = res['number'] + 1
+    table_client.upsert_entity(res, mode=UpdateMode.REPLACE)
+    logging.info('updated database')
 
 @app.function_name (name="HttpTrigger1")
 @app.route("visit")
@@ -53,9 +43,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             status_code=200
         )
     except Exception as e:
-        logging.critical()
+        logging.critical(e)
         return func.HttpResponse(
-            json.dumps({"visitors": 1}),
+            json.dumps({"visitors": 0}),
             status_code=400
         )
 
