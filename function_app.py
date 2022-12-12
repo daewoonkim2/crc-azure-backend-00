@@ -10,8 +10,7 @@ connectionstring = os.environ["COSMOS_CONNECTION_STRING"]
 tablename = os.environ["COSMOS_TABLE_NAME"]
 dbname = os.environ["COSMOS_DB_NAME"]
 
-table_service_client = TableServiceClient.from_connection_string(conn_str=connectionstring,table_name=tablename)
-table_client = table_service_client.create_table_if_not_exists(tablename)
+table_client = TableServiceClient.from_connection_string(conn_str=connectionstring,table_name=tablename).create_table_if_not_exists(tablename)
 
 app = func.FunctionApp()
 
@@ -36,7 +35,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             status_code=200
         )
     except ResourceNotFoundError:
-        logging.warn('entity is missing, attempting to initialize table')
+        logging.warning('entity is missing, attempting to initialize table')
         table_client.create_entity({"PartitionKey":"visitors", "RowKey":"count", "number":1})
         return func.HttpResponse(
             json.dumps({"visitors": 1}),
