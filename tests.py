@@ -60,7 +60,7 @@ class tests (unittest.TestCase):
         self.assertEqual(resp.status_code, 200)
         azure_mock.reset_mock()
 
-    #general error response should return 1, status 400
+    #general error response should return 0, status 400
     @patch("os.environ", {"COSMOS_CONNECTION_STRING":"test_conn.db", "COSMOS_TABLE_NAME":"test_table", "COSMOS_DB_NAME": "test_db_name"})
     @patch("azure.data.tables.TableServiceClient", azure_mock)
     def test_error (self):
