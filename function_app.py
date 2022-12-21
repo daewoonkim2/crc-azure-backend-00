@@ -40,8 +40,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         update_visitor_count(table_client, res)
         logging.info('updated database')
         return func.HttpResponse(
-            json.dumps({"visitors": num_of_visitors}),
-            # json.dumps({"visitors": num_of_visitors+1}),
+            json.dumps({"visitors": num_of_visitors+1}),
             status_code=200
         )
     except ResourceNotFoundError:
