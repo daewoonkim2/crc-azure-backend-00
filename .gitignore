@@ -4,6 +4,7 @@ csx
 .vs
 edge
 Publish
+.pytest_cache
 
 *.user
 *.suo
