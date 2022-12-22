@@ -1,17 +1,14 @@
 
 env:
-  RESOURCE_GROUP_LOCATION: 'EastUS2'
-  RESOURCE_GROUP_NAME: 'crc-azure-resource-group-00'
-  TEMPLATE_FILE_NAME: 'function-template.json'
   AZURE_FUNCTIONAPP_NAME: 'crc-az-functionapp-01'   # set this to your function app name on Azure
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'       # set this to the path to your function app project, defaults to the repository root
   PYTHON_VERSION: '3.9'                     # set this to the python version to use (e.g. '3.6', '3.7', '3.8')
 
-name: Deploy Python App
+name: Deploy Azure Python Function App
 
 on:
   workflow_run:
-    workflows: ["Test Python App"]
+    workflows: ["Deploy Arm Templates"]
     branches: [main]
     types:
       - completed
@@ -20,26 +17,6 @@ permissions:
   contents: read
 
 jobs:
-  deploy-arm-resources:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - uses: Azure/CLI@v1
-      with:
-        inlineScript: |
-          #!/bin/bash
-          az group create --name ${{ env.RESOURCE_GROUP_NAME }} --location ${{ env.RESOURCE_GROUP_LOCATION }}
-          echo "Azure resource group created"
-    - uses: azure/arm-deploy@v1
-      with:
-        scope: 'resourcegroup'
-        resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
-        template: ./${{ env.TEMPLATE_FILE_NAME }}
-
   build-and-deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
@@ -76,4 +53,3 @@ jobs:
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }} # Remove publish-profile to use Azure RBAC
         scm-do-build-during-deployment: true
         enable-oryx-build: true
-
