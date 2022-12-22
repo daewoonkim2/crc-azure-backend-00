@@ -78,7 +78,6 @@ jobs:
       with:
         resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
         template: ./function-template.json
-        parameters: storageAccountType=Standard_LRS
 
   # build-and-deploy:
   #   runs-on: ubuntu-latest
