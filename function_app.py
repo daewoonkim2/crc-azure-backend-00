@@ -6,7 +6,7 @@ import json
 
 from azure.data.tables import TableServiceClient, TableClient, UpdateMode, TableEntity
 
-app = func.FunctionApp()
+app = func.FunctionApp(auth_level=func.AuthLevel.ANONYMOUS)
 
 connectionstring = os.environ["CUSTOMCONNSTR_COSMOS_CONNECTION_STRING"]
 tablename = os.environ["COSMOS_TABLE_NAME"]
@@ -15,6 +15,7 @@ dbname = os.environ["COSMOS_DB_NAME"]
 table_client = TableServiceClient.from_connection_string(conn_str=connectionstring,table_name=tablename).create_table_if_not_exists(tablename)
 
 app = func.FunctionApp()
+
 def read_visitor_count (res: TableClient):
     logging.info('reading database')
     return res.get_entity(partition_key="visitors", row_key="count")
