@@ -76,7 +76,7 @@ jobs:
           echo "Azure resource group created"
     - uses: azure/arm-deploy@v1
       with:
-        resourceGroupName: ${{ env.ResourceGroupName }}
+        resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
         template: ./function-template.json
         parameters: storageAccountType=Standard_LRS
 
