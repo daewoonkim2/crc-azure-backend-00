@@ -7,11 +7,11 @@ env:
   RESOURCE_GROUP_NAME: 'crc-azure-resource-group-00'
   TEMPLATE_FILE_NAME: 'function-template.json'
 
-name: Python application - test and deploy to azure function app
+name: Deploy Azure Python Function App
 
 on:
   workflow_run:
-    workflows: ["build-and-test"]
+    workflows: ["Test Python App"]
     branches: [main]
     types:
       - completed
@@ -21,6 +21,7 @@ permissions:
 
 jobs:
   deploy-arm-resources:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -35,6 +36,7 @@ jobs:
           echo "Azure resource group created"
     - uses: azure/arm-deploy@v1
       with:
+        scope: 'resourcegroup'
         resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
         template: ./function-template.json
 
