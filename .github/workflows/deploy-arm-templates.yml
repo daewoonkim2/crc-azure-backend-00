@@ -2,7 +2,7 @@
 env:
   RESOURCE_GROUP_LOCATION: 'EastUS2'
   RESOURCE_GROUP_NAME: 'crc-azure-resource-group-00'
-  TEMPLATE_FILE_NAME: 'function-template.json'
+  TEMPLATE_FILE_NAME: 'function-template.json'  
 
 name: Deploy Arm Templates
 
@@ -36,3 +36,4 @@ jobs:
         scope: 'resourcegroup'
         resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
         template: ./${{ env.TEMPLATE_FILE_NAME }}
+        parameters: COSMOSDB_CONNECTION_STRING=${{ secrets.COSMOSDB_CONNECTION_STRING }} COSMOSDB_TABLE_NAME=${{ secrets.COSMOSDB_TABLE_NAME }} COSMOS_DB_NAME=${{ secrets.COSMOS_DB_NAME }}

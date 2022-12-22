@@ -25,6 +25,18 @@
         "hostingPlanName": {
             "type": "string",
             "defaultValue": "crc-az-fna-hostingname-01"
+        },
+        "COSMOSDB_CONNECTION_STRING": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "COSMOSDB_TABLE_NAME":{
+            "type": "string",
+            "defaultValue": ""
+        },
+        "COSMOS_DB_NAME": {
+            "type": "string",
+            "defaultValue": ""
         }
     },
     "functions": [],
@@ -104,6 +116,21 @@
                         {
                             "name": "FUNCTIONS_WORKER_RUNTIME",
                             "value": "python"
+                        },
+                        {
+                            "name": "COSMOSDB_TABLE_NAME",
+                            "value": "[parameters('COSMOSDB_TABLE_NAME')]"
+                        },
+                        {
+                            "name": "COSMOS_DB_NAME",
+                            "vlaue": "[parameters('COSMOS_DB_NAME')]"
+                        }
+                    ],
+                    "connectionStrings": [
+                        {
+                            "name": "COSMOSDB_CONNECTION_STRING",
+                            "connectionString": "[parameters('COSMOSDB_CONNECTION_STRING')]",
+                            "type": "Custom"
                         }
                     ]
                 }
