@@ -9,7 +9,7 @@ azure_mock = Mock()
 class tests (unittest.TestCase):
 
     #response should return 1, status code 200
-    @patch("os.environ", {"COSMOS_CONNECTION_STRING":"test_conn.db", "COSMOS_TABLE_NAME":"test_table", "COSMOS_DB_NAME": "test_db_name"})
+    @patch("os.environ", {"CUSTOMCONNSTR_COSMOS_CONNECTION_STRING":"test_conn.db", "COSMOS_TABLE_NAME":"test_table", "COSMOS_DB_NAME": "test_db_name"})
     @patch("azure.data.tables.TableServiceClient", azure_mock)
     def test_first_visit (self):
         azure_mock.from_connection_string.return_value.create_table_if_not_exists.return_value.get_entity.side_effect = ResourceNotFoundError()
@@ -31,7 +31,7 @@ class tests (unittest.TestCase):
         azure_mock.from_connection_string.return_value.create_table_if_not_exists.return_value.get_entity.reset_mock(side_effect=True)
         azure_mock.reset_mock()
 
-    @patch("os.environ", {"COSMOS_CONNECTION_STRING":"test_conn.db", "COSMOS_TABLE_NAME":"test_table", "COSMOS_DB_NAME": "test_db_name"})
+    @patch("os.environ", {"CUSTOMCONNSTR_COSMOS_CONNECTION_STRING":"test_conn.db", "COSMOS_TABLE_NAME":"test_table", "COSMOS_DB_NAME": "test_db_name"})
     @patch("azure.data.tables.TableServiceClient", azure_mock)
     def test_visit (self):
         base = 10
@@ -61,7 +61,7 @@ class tests (unittest.TestCase):
         azure_mock.reset_mock()
 
     #general error response should return 0, status 400
-    @patch("os.environ", {"COSMOS_CONNECTION_STRING":"test_conn.db", "COSMOS_TABLE_NAME":"test_table", "COSMOS_DB_NAME": "test_db_name"})
+    @patch("os.environ", {"CUSTOMCONNSTR_COSMOS_CONNECTION_STRING":"test_conn.db", "COSMOS_TABLE_NAME":"test_table", "COSMOS_DB_NAME": "test_db_name"})
     @patch("azure.data.tables.TableServiceClient", azure_mock)
     def test_error (self):
         import function_app
