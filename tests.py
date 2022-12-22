@@ -56,7 +56,7 @@ class tests (unittest.TestCase):
         azure_mock.from_connection_string.return_value.create_table_if_not_exists.return_value.upsert_entity.assert_called_once()
 
         #visitor value return should be visitor value+1 / should be increased
-        self.assertEqual(json.loads(resp.get_body())['visitors'], base+2)
+        self.assertEqual(json.loads(resp.get_body())['visitors'], base+1)
         self.assertEqual(resp.status_code, 200)
         azure_mock.reset_mock()
 
