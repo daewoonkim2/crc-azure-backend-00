@@ -105,7 +105,8 @@
             "dependsOn": [
             "[resourceId('Microsoft.Insights/components', parameters('applicationInsightsName'))]",
             "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
-            "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+            "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+            "[resourceId('Microsoft.Web/sites/config', parameters('functionAppName')]"
             ],
             "properties": {
                 "reserved": true,
@@ -151,8 +152,7 @@
                     ]
                 }
             }
-        },
-
+        }
     ],
     "outputs": {}
 }
