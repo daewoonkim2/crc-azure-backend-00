@@ -24,7 +24,7 @@ def update_visitor_count (table_client: TableClient, table_entity: TableEntity):
     table_client.upsert_entity(table_entity, mode=UpdateMode.REPLACE)
 
 @app.function_name (name="HttpTrigger1")
-@app.route("visit")
+@app.route(route="visit")
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
