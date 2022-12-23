@@ -123,7 +123,11 @@
                         },
                         {
                             "name": "COSMOS_DB_NAME",
-                            "vlaue": "[parameters('COSMOS_DB_NAME')]"
+                            "value": "[parameters('COSMOS_DB_NAME')]"
+                        },
+                        {
+                            "name": "AzureWebJobsFeatureFlags",
+                            "value": "EnableWorkerIndexing"
                         }
                     ],
                     "connectionStrings": [
