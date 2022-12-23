@@ -83,34 +83,25 @@
             }
         },
         {
-            "comments": "CORS allow origins.",
-            "type": "Microsoft.Web/sites/config",
-            "name": "[concat(parameters('functionAppName')), '/web')]",
-            "apiVersion": "2016-08-01",
-            "properties": {
-                "cors": {
-                    "allowedOrigins": [
-                        "cv.daewoon-kim.online"
-                    ]
-                }
-            }
-        },
-        {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2022-03-01",
             "name": "[parameters('functionAppName')]",
             "location": "[parameters('location')]",
             "kind": "functionapp,linux",
             "dependsOn": [
-            "[resourceId('Microsoft.Insights/components', parameters('applicationInsightsName'))]",
-            "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
-            "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
-            "[resourceId('Microsoft.Web/sites/config', parameters('functionAppName')]"
+                "[resourceId('Microsoft.Insights/components', parameters('applicationInsightsName'))]",
+                "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
             ],
             "properties": {
                 "reserved": true,
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
                 "siteConfig": {
+                    "cors": {
+                        "allowedOrigins": [
+                            "cv.daewoon-kim.online"
+                        ]
+                    },
                     "linuxFxVersion": "python|3.9",
                     "appSettings": [
                         {
