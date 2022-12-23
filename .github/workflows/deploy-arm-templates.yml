@@ -36,4 +36,4 @@ jobs:
         scope: 'resourcegroup'
         resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
         template: ./${{ env.TEMPLATE_FILE_NAME }}
-        parameters: COSMOSDB_CONNECTION_STRING=${{ secrets.COSMOSDB_CONNECTION_STRING }} COSMOSDB_TABLE_NAME=${{ secrets.COSMOSDB_TABLE_NAME }} COSMOS_DB_NAME=${{ secrets.COSMOS_DB_NAME }}
+        parameters: COSMOSDB_CONNECTION_STRING=${{ secrets.COSMOSDB_CONNECTION_STRING }} COSMOS_TABLE_NAME=${{ secrets.COSMOS_TABLE_NAME }} COSMOS_DB_NAME=${{ secrets.COSMOS_DB_NAME }}

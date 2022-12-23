@@ -30,7 +30,7 @@
             "type": "string",
             "defaultValue": ""
         },
-        "COSMOSDB_TABLE_NAME":{
+        "COSMOS_TABLE_NAME":{
             "type": "string",
             "defaultValue": ""
         },
@@ -116,8 +116,8 @@
                             "value": "python"
                         },
                         {
-                            "name": "COSMOSDB_TABLE_NAME",
-                            "value": "[parameters('COSMOSDB_TABLE_NAME')]"
+                            "name": "COSMOS_TABLE_NAME",
+                            "value": "[parameters('COSMOS_TABLE_NAME')]"
                         },
                         {
                             "name": "COSMOS_DB_NAME",
