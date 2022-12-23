@@ -12,8 +12,6 @@ dbname = os.environ["COSMOS_DB_NAME"]
 
 table_client = TableServiceClient.from_connection_string(conn_str=connectionstring,table_name=tablename).create_table_if_not_exists(tablename)
 
-app = func.FunctionApp()
-
 def read_visitor_count (res: TableClient):
     logging.info('reading database')
     return res.get_entity(partition_key="visitors", row_key="count")
@@ -23,8 +21,6 @@ def update_visitor_count (table_client: TableClient, table_entity: TableEntity):
     table_entity['number'] = table_entity['number'] + 1
     table_client.upsert_entity(table_entity, mode=UpdateMode.REPLACE)
 
-@app.function_name (name="HttpTrigger1")
-@app.route(route="visit", http_auth_level=func.AuthLevel.ANONYMOUS)
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 

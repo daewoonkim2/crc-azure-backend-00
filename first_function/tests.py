@@ -22,9 +22,7 @@ class tests (unittest.TestCase):
             url = '/api/visit'
         )
 
-        func_call = function_app.main.build().get_user_function()
-
-        resp:func.HttpResponse = func_call(req)
+        resp:func.HttpResponse = function_app.main(req)
 
         self.assertEqual(json.loads(resp.get_body())['visitors'], 1)
         self.assertEqual(resp.status_code, 200)
@@ -45,9 +43,7 @@ class tests (unittest.TestCase):
             url = '/api/visit'
         )
 
-        func_call = function_app.main.build().get_user_function()
-
-        resp:func.HttpResponse = func_call(req)
+        resp:func.HttpResponse = function_app.main(req)
 
         #db read is called
         azure_mock.from_connection_string.return_value.create_table_if_not_exists.return_value.get_entity.assert_called_once()
@@ -72,9 +68,8 @@ class tests (unittest.TestCase):
             url = '/api/visit'
         )
 
-        func_call = function_app.main.build().get_user_function()
+        resp:func.HttpResponse = function_app.main(req)
 
-        resp:func.HttpResponse = func_call(req)
         self.assertEqual(json.loads(resp.get_body())['visitors'], 0)
         self.assertEqual(resp.status_code, 400)
         azure_mock.reset_mock()
