@@ -83,6 +83,20 @@
             }
         },
         {
+            "comments": "CORS allow origins.",
+            "type": "Microsoft.Web/sites/config",
+            "name": "[concat(parameters('functionAppName'), '/web')]",
+            "apiVersion": "2016-08-01",
+            "properties": {
+                "cors": {
+                    "allowedOrigins": [
+                        "cv.daewoon-kim.online"
+                    ]
+                }
+            },
+            "dependsOn": []
+        },
+        {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2022-03-01",
             "name": "[parameters('functionAppName')]",
@@ -137,7 +151,8 @@
                     ]
                 }
             }
-        }
+        },
+
     ],
     "outputs": {}
 }
