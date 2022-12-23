@@ -6,7 +6,7 @@ import json
 
 from azure.data.tables import TableServiceClient, TableClient, UpdateMode, TableEntity
 
-connectionstring = os.environ["CUSTOMCONNSTR_COSMOS_CONNECTION_STRING"]
+connectionstring = os.environ["CUSTOMCONNSTR_COSMOSDB_CONNECTION_STRING"]
 tablename = os.environ["COSMOS_TABLE_NAME"]
 dbname = os.environ["COSMOS_DB_NAME"]
 
