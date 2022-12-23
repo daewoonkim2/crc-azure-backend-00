@@ -50,10 +50,9 @@
             "tags": {
                 "displayName": "crc-az-storageaccount-fn-01"
             },
-            "kind": "StorageV2",
+            "kind": "Storage",
             "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
+                "name": "Standard_LRS"
             }
         },
         {
@@ -74,11 +73,13 @@
             "location": "[parameters('location')]",
             "sku": {
                 "name": "Y1",
-                "tier": "Dynamic"
+                "tier": "Dynamic",
+                "size": "Y1",
+                "family": "Y"
             },
             "properties": {
-            "computeMode": "Dynamic",
-            "reserved": true
+                "computeMode": "Dynamic",
+                "reserved": true
             }
         },
         {
