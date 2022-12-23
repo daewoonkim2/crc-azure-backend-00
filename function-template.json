@@ -73,11 +73,8 @@
             "name": "[parameters('hostingPlanName')]",
             "location": "[parameters('location')]",
             "sku": {
-            "name": "Y1",
-            "tier": "Dynamic",
-            "size": "Y1",
-            "family": "Y",
-            "capacity":0
+                "name": "Y1",
+                "tier": "Dynamic"
             },
             "properties": {
             "computeMode": "Dynamic",
