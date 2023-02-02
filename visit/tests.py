@@ -3,6 +3,7 @@ from unittest.mock import patch, Mock
 from azure.core.exceptions import ResourceNotFoundError
 import azure.functions as func
 import json
+import visit
 
 azure_mock = Mock()
 
@@ -14,15 +15,13 @@ class tests (unittest.TestCase):
     def test_first_visit (self):
         azure_mock.from_connection_string.return_value.create_table_if_not_exists.return_value.get_entity.side_effect = ResourceNotFoundError()
 
-        import function_app
-
         req = func.HttpRequest(
             method = 'GET',
             body = None,
             url = '/api/visit'
         )
 
-        resp:func.HttpResponse = function_app.main(req)
+        resp:func.HttpResponse = visit.main(req)
 
         self.assertEqual(json.loads(resp.get_body())['visitors'], 1)
         self.assertEqual(resp.status_code, 200)
@@ -35,15 +34,13 @@ class tests (unittest.TestCase):
         base = 10
         azure_mock.from_connection_string.return_value.create_table_if_not_exists.return_value.get_entity.return_value = {"number":base}
 
-        import function_app
-
         req = func.HttpRequest(
             method = 'GET',
             body = None,
             url = '/api/visit'
         )
 
-        resp:func.HttpResponse = function_app.main(req)
+        resp:func.HttpResponse = visit.main(req)
 
         #db read is called
         azure_mock.from_connection_string.return_value.create_table_if_not_exists.return_value.get_entity.assert_called_once()
@@ -60,7 +57,6 @@ class tests (unittest.TestCase):
     @patch("os.environ", {"CUSTOMCONNSTR_COSMOSDB_CONNECTION_STRING":"test_conn.db", "COSMOS_TABLE_NAME":"test_table", "COSMOS_DB_NAME": "test_db_name"})
     @patch("azure.data.tables.TableServiceClient", azure_mock)
     def test_error (self):
-        import function_app
 
         req = func.HttpRequest(
             method = 'GET',
@@ -68,7 +64,7 @@ class tests (unittest.TestCase):
             url = '/api/visit'
         )
 
-        resp:func.HttpResponse = function_app.main(req)
+        resp:func.HttpResponse = visit.main(req)
 
         self.assertEqual(json.loads(resp.get_body())['visitors'], 0)
         self.assertEqual(resp.status_code, 400)
