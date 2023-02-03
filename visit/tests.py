@@ -3,7 +3,6 @@ from unittest.mock import patch, Mock
 from azure.core.exceptions import ResourceNotFoundError
 import azure.functions as func
 import json
-from __init__ import main as visit_func
 
 azure_mock = Mock()
 
@@ -14,6 +13,8 @@ class tests (unittest.TestCase):
     @patch("azure.data.tables.TableServiceClient", azure_mock)
     def test_first_visit (self):
         azure_mock.from_connection_string.return_value.create_table_if_not_exists.return_value.get_entity.side_effect = ResourceNotFoundError()
+
+        from __init__ import main as visit_func
 
         req = func.HttpRequest(
             method = 'GET',
@@ -33,6 +34,8 @@ class tests (unittest.TestCase):
     def test_visit (self):
         base = 10
         azure_mock.from_connection_string.return_value.create_table_if_not_exists.return_value.get_entity.return_value = {"number":base}
+
+        from __init__ import main as visit_func
 
         req = func.HttpRequest(
             method = 'GET',
@@ -57,6 +60,8 @@ class tests (unittest.TestCase):
     @patch("os.environ", {"CUSTOMCONNSTR_COSMOSDB_CONNECTION_STRING":"test_conn.db", "COSMOS_TABLE_NAME":"test_table", "COSMOS_DB_NAME": "test_db_name"})
     @patch("azure.data.tables.TableServiceClient", azure_mock)
     def test_error (self):
+
+        from __init__ import main as visit_func
 
         req = func.HttpRequest(
             method = 'GET',
