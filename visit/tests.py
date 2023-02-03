@@ -3,7 +3,7 @@ from unittest.mock import patch, Mock
 from azure.core.exceptions import ResourceNotFoundError
 import azure.functions as func
 import json
-import visit
+from __init__ import main as visit_func
 
 azure_mock = Mock()
 
@@ -21,7 +21,7 @@ class tests (unittest.TestCase):
             url = '/api/visit'
         )
 
-        resp:func.HttpResponse = visit.main(req)
+        resp:func.HttpResponse = visit_func(req)
 
         self.assertEqual(json.loads(resp.get_body())['visitors'], 1)
         self.assertEqual(resp.status_code, 200)
@@ -40,7 +40,7 @@ class tests (unittest.TestCase):
             url = '/api/visit'
         )
 
-        resp:func.HttpResponse = visit.main(req)
+        resp:func.HttpResponse = visit_func(req)
 
         #db read is called
         azure_mock.from_connection_string.return_value.create_table_if_not_exists.return_value.get_entity.assert_called_once()
@@ -64,7 +64,7 @@ class tests (unittest.TestCase):
             url = '/api/visit'
         )
 
-        resp:func.HttpResponse = visit.main(req)
+        resp:func.HttpResponse = visit_func(req)
 
         self.assertEqual(json.loads(resp.get_body())['visitors'], 0)
         self.assertEqual(resp.status_code, 400)
