@@ -99,7 +99,7 @@
                 "siteConfig": {
                     "cors": {
                         "allowedOrigins": [
-                            "https://cv.daewoon-kim.online"
+                            "https://cv.daewoon-kim.fyi"
                         ]
                     },
                     "linuxFxVersion": "python|3.9",
